@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LANLAB — Praktikum Jaringan Komputer</title>
+<style>
+:root{
+  --bg:#050816;--card:#0d1426;--card2:#111b31;--cyan:#37e8ff;
+  --blue:#7180ff;--text:#f4f8ff;--muted:#9aaac2;--line:rgba(255,255,255,.1);
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{
+ margin:0;color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;
+ line-height:1.65;background:
+ radial-gradient(circle at 15% 0%,rgba(55,232,255,.15),transparent 30%),
+ radial-gradient(circle at 90% 15%,rgba(113,128,255,.18),transparent 30%),
+ linear-gradient(135deg,#03050d,#091225 55%,#050816);
+}
+body:before{
+ content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;
+ background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+ background-size:42px 42px;
+}
+nav{position:sticky;top:0;z-index:99;background:rgba(3,6,15,.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:950;letter-spacing:1px}.logo span{color:var(--cyan)}
+nav a{color:var(--muted);text-decoration:none;font-size:13px;margin-left:17px}
+nav a:hover{color:white}
+.hero,main{max-width:1180px;margin:auto;padding-left:20px;padding-right:20px}
+.hero{padding-top:78px;padding-bottom:55px;display:grid;grid-template-columns:1.2fr .8fr;gap:35px;align-items:center}
+.badge,.tag{display:inline-block;border:1px solid rgba(55,232,255,.35);background:rgba(55,232,255,.06);color:var(--cyan);padding:7px 12px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:1.5px}
+h1{font-size:clamp(43px,7vw,78px);line-height:.95;letter-spacing:-4px;margin:18px 0}
+.grad{background:linear-gradient(90deg,#fff,var(--cyan),#aeb6ff);-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:17px;max-width:720px}
+.btn{display:inline-block;margin:7px 6px 0 0;padding:11px 17px;border-radius:12px;text-decoration:none;color:white;background:rgba(255,255,255,.06);border:1px solid var(--line);font-weight:800;font-size:13px}
+.primary{background:linear-gradient(135deg,var(--cyan),var(--blue));color:#03101a;border:0}
+.card{background:linear-gradient(145deg,rgba(15,26,45,.97),rgba(7,13,27,.96));border:1px solid var(--line);border-radius:23px;box-shadow:0 18px 60px rgba(0,0,0,.3)}
+.profile{padding:25px;text-align:center}
+.profile-photo{width:145px;height:180px;object-fit:cover;border-radius:20px;border:2px solid rgba(55,232,255,.55);display:block;margin:0 auto 17px;background:#07101e}
+.profile h2{margin:7px 0 13px;font-size:24px}.profile p{text-align:left;color:var(--muted);font-size:13px;margin:5px 0}.profile b{color:white}
+.kicker{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:2px}
+section{padding:62px 0}.section-head h2{font-size:36px;line-height:1.1;margin:8px 0}.section-head p{color:var(--muted);max-width:780px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.tool{padding:20px;min-height:150px}.icon{font-size:30px}.tool h3{margin:9px 0 4px}.tool p,.step p{font-size:13px;color:var(--muted)}
+.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.step{padding:22px}.num{width:37px;height:37px;border-radius:11px;background:rgba(55,232,255,.1);color:var(--cyan);display:grid;place-items:center;font-weight:900}
+.step h3{margin:13px 0 5px}
+.colors{display:grid;grid-template-columns:1fr 1fr;gap:18px}.colorcard{padding:22px}
+.wire{display:flex;gap:10px;align-items:center;margin:8px 0;font-size:13px}.wire i{width:42px;height:24px;border-radius:6px;border:1px solid rgba(255,255,255,.18)}
+.wo{background:linear-gradient(#fff 0 48%,#f28a21 48%)}.o{background:#f28a21}.wg{background:linear-gradient(#fff 0 48%,#3ebc66 48%)}.g{background:#3ebc66}.wb{background:linear-gradient(#fff 0 48%,#3e7ad6 48%)}.b{background:#3e7ad6}.wbr{background:linear-gradient(#fff 0 48%,#9b6842 48%)}.br{background:#9b6842}
+.tablebox{padding:20px;overflow:auto}.ip{width:100%;border-collapse:collapse;min-width:560px}.ip th,.ip td{padding:13px;border-bottom:1px solid var(--line);text-align:left}.ip th{color:var(--cyan);font-size:12px}.ip td{color:#c5d2e4}
+.code{background:#030710;border:1px solid var(--line);padding:16px;border-radius:14px;color:#80f6c2;font-family:Consolas,monospace}
+.media-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.media{padding:22px}.media video{width:100%;min-height:230px;background:#02040a;border-radius:15px;border:1px solid var(--line)}
+.ppt{width:100%;height:470px;border:1px solid var(--line);border-radius:15px;background:#02040a}.media-note{color:var(--muted);font-size:12px}
+.note{padding:15px;border-left:3px solid var(--cyan);background:rgba(55,232,255,.05);border-radius:10px;color:#b9c9db;font-size:13px}
+footer{text-align:center;border-top:1px solid var(--line);padding:35px 20px;color:var(--muted);font-size:13px}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.colors,.media-grid,.steps{grid-template-columns:1fr}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}h1{letter-spacing:-2px}nav .links{display:none}.profile-photo{width:140px;height:175px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav">
+    <div class="logo">LAN<span>LAB</span> / 01</div>
+    <div class="links">
+      <a href="#alat">Alat</a><a href="#crimping">Crimping</a><a href="#warna">Warna</a>
+      <a href="#koneksi">Koneksi</a><a href="#sharing">Sharing</a><a href="#media">Media</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div>
+    <span class="badge">PRAKTIKUM • JARINGAN KOMPUTER</span>
+    <h1><span class="grad">KABEL LAN</span><br>& SHARING 2 LAPTOP</h1>
+    <p>Website pembelajaran interaktif untuk merangkai kabel LAN crossover, melakukan crimping RJ45, mengecek kabel dengan LAN tester, menghubungkan dua laptop, melakukan ping, dan sharing file.</p>
+    <a class="btn primary" href="#crimping">Mulai Praktikum →</a>
+    <a class="btn" href="#media">Lihat Media</a>
+  </div>
+
+  <div class="card profile">
+    <img class="profile-photo" src="foto-identitas.jpg" alt="Foto Aulin Arsih Andrianie"
+      onerror="this.style.display='none';document.getElementById('fallback').style.display='block'">
+    <div id="fallback" style="display:none;font-size:55px">👩🏻‍💻</div>
+    <div class="kicker">IDENTITAS MAHASISWA</div>
+    <h2>Aulin Arsih Andrianie</h2>
+    <p><b>NIM:</b> 062640723193</p>
+    <p><b>Kelas:</b> 1-TIA</p>
+    <p><b>Jurusan:</b> Teknik Komputer</p>
+    <p><b>Prodi:</b> Teknologi Informatika Multimedia Digital</p>
+    <p><b>Mata Kuliah:</b> Jaringan Komputer</p>
+    <p><b>Dosen:</b> Dr. Ali Firdaus, S.Kom., M.Kom.</p>
+  </div>
+</header>
+
+<main>
+<section id="alat">
+  <div class="section-head"><div class="kicker">01 / TOOLKIT</div><h2>Alat & Bahan</h2><p>Siapkan semua komponen sebelum mulai praktik.</p></div>
+  <div class="grid">
+    <div class="card tool"><div class="icon">🔌</div><h3>RJ45</h3><p>Konektor untuk menghubungkan kabel UTP ke port Ethernet.</p></div>
+    <div class="card tool"><div class="icon">🧵</div><h3>Kabel UTP</h3><p>Media penghantar data yang terdiri dari 8 kabel kecil.</p></div>
+    <div class="card tool"><div class="icon">💡</div><h3>LAN Tester</h3><p>Untuk mengecek urutan dan kontinuitas kabel.</p></div>
+    <div class="card tool"><div class="icon">🛠️</div><h3>Tang Crimping</h3><p>Untuk menekan konektor RJ45 hingga terkunci.</p></div>
+    <div class="card tool"><div class="icon">✂️</div><h3>Kabel Stripper</h3><p>Untuk mengupas bagian luar kabel UTP.</p></div>
+  </div>
+</section>
+
+<section id="crimping">
+  <div class="section-head"><div class="kicker">02 / CRIMPING</div><h2>Cara Crimping Kabel LAN</h2><p>Urutan praktik mengikuti materi: potong, kupas, susun, masukkan RJ45, crimping, lalu uji.</p></div>
+  <div class="steps">
+    <div class="card step"><div class="num">01</div><h3>Potong kabel</h3><p>Potong kabel UTP sesuai kebutuhan.</p></div>
+    <div class="card step"><div class="num">02</div><h3>Kupas kabel</h3><p>Kupas bagian luar kabel sekitar 2–3 cm.</p></div>
+    <div class="card step"><div class="num">03</div><h3>Pisahkan 8 kabel</h3><p>Pisahkan delapan kabel kecil di dalamnya.</p></div>
+    <div class="card step"><div class="num">04</div><h3>Susun T568A</h3><p>Susun kabel sesuai T568A untuk ujung pertama.</p></div>
+    <div class="card step"><div class="num">05</div><h3>Rapikan</h3><p>Luruskan kabel dan potong rata supaya semua ujung sama panjang.</p></div>
+    <div class="card step"><div class="num">06</div><h3>Masukkan RJ45</h3><p>Pastikan semua kabel masuk sampai ujung konektor.</p></div>
+    <div class="card step"><div class="num">07</div><h3>Crimping</h3><p>Masukkan RJ45 ke tang crimping lalu tekan sampai konektor terkunci.</p></div>
+    <div class="card step"><div class="num">08</div><h3>Ujung kedua T568B</h3><p>Ulangi proses pada ujung kedua menggunakan T568B.</p></div>
+  </div>
+  <br>
+  <div class="note">💡 Setelah selesai, gunakan LAN cable tester. Urutan lampu ideal: <b>1 → 2 → 3 → 4 → 5 → 6 → 7 → 8</b>. Jika lampu tidak menyala atau urutannya salah, kabel perlu diperiksa dan dapat di-crimp ulang.</div>
+</section>
+
+<section id="warna">
+  <div class="section-head"><div class="kicker">03 / WIRING</div><h2>Susunan Warna Kabel</h2><p>Ujung pertama menggunakan T568A dan ujung kedua menggunakan T568B.</p></div>
+  <div class="colors">
+    <div class="card colorcard"><h3>T568A — Ujung 1</h3>
+      <div class="wire"><i class="wg"></i>1. Putih Hijau</div><div class="wire"><i class="g"></i>2. Hijau</div>
+      <div class="wire"><i class="wo"></i>3. Putih Orange</div><div class="wire"><i class="b"></i>4. Biru</div>
+      <div class="wire"><i class="wb"></i>5. Putih Biru</div><div class="wire"><i class="o"></i>6. Orange</div>
+      <div class="wire"><i class="wbr"></i>7. Putih Coklat</div><div class="wire"><i class="br"></i>8. Coklat</div>
+    </div>
+    <div class="card colorcard"><h3>T568B — Ujung 2</h3>
+      <div class="wire"><i class="wo"></i>1. Putih Orange</div><div class="wire"><i class="o"></i>2. Orange</div>
+      <div class="wire"><i class="wg"></i>3. Putih Hijau</div><div class="wire"><i class="b"></i>4. Biru</div>
+      <div class="wire"><i class="wb"></i>5. Putih Biru</div><div class="wire"><i class="g"></i>6. Hijau</div>
+      <div class="wire"><i class="wbr"></i>7. Putih Coklat</div><div class="wire"><i class="br"></i>8. Coklat</div>
+    </div>
+  </div>
+</section>
+
+<section id="koneksi">
+  <div class="section-head"><div class="kicker">04 / NETWORK</div><h2>Menghubungkan 2 Laptop</h2><p>Gunakan kabel LAN yang sudah selesai dirakit untuk menghubungkan kedua laptop.</p></div>
+  <div class="steps">
+    <div class="card step"><div class="num">01</div><h3>Hubungkan kabel</h3><p>Hubungkan kedua ujung kabel LAN ke port Ethernet masing-masing laptop. Pastikan kabel terpasang dengan benar.</p></div>
+    <div class="card step"><div class="num">02</div><h3>Buka Control Panel</h3><p>Start → Control Panel → Network and Sharing Center → Change adapter settings.</p></div>
+    <div class="card step"><div class="num">03</div><h3>Atur IPv4</h3><p>Klik kanan Ethernet → Properties → Internet Protocol Version 4 (TCP/IPv4) → Properties → Use the following IP address.</p></div>
+    <div class="card step"><div class="num">04</div><h3>Simpan</h3><p>Masukkan konfigurasi IP sesuai tabel, kemudian klik OK.</p></div>
+  </div>
+  <br>
+  <div class="card tablebox">
+    <table class="ip">
+      <tr><th>Pengaturan</th><th>Laptop 1</th><th>Laptop 2</th></tr>
+      <tr><td>IP Address</td><td>192.168.1.1</td><td>192.168.1.2</td></tr>
+      <tr><td>Subnet Mask</td><td>255.255.255.0</td><td>255.255.255.0</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-head"><div class="kicker">05 / TEST</div><h2>Pengecekan Keterhubungan</h2><p>Uji koneksi menggunakan Command Prompt.</p></div>
+  <div class="steps">
+    <div class="card step"><div class="num">01</div><h3>Buka CMD</h3><p>Tekan Windows + R, ketik <b>cmd</b>, lalu tekan Enter.</p></div>
+    <div class="card step"><div class="num">02</div><h3>Laptop 1 → Laptop 2</h3><div class="code">ping 192.168.1.2</div></div>
+    <div class="card step"><div class="num">03</div><h3>Laptop 2 → Laptop 1</h3><div class="code">ping 192.168.1.1</div></div>
+    <div class="card step"><div class="num">04</div><h3>Periksa hasil</h3><p>Jika muncul tulisan <b>Reply from</b>, berarti kedua laptop berhasil terhubung melalui jaringan LAN.</p></div>
+  </div>
+</section>
+
+<section id="sharing">
+  <div class="section-head"><div class="kicker">06 / FILE SHARING</div><h2>Sharing File via LAN</h2><p>Setelah koneksi berhasil, folder dapat dibagikan dari Laptop 1 dan diakses Laptop 2.</p></div>
+  <div class="steps">
+    <div class="card step"><div class="num">01</div><h3>Pilih folder</h3><p>Pilih folder yang ingin dibagikan di Laptop 1.</p></div>
+    <div class="card step"><div class="num">02</div><h3>Aktifkan sharing</h3><p>Klik kanan folder → Properties → Sharing → Advanced Sharing → Share this folder → Apply.</p></div>
+    <div class="card step"><div class="num">03</div><h3>Akses dari Laptop 2</h3><p>Tekan Windows + R lalu masukkan alamat:</p><div class="code">\\192.168.1.1</div></div>
+    <div class="card step"><div class="num">04</div><h3>Transfer file</h3><p>Jika folder tampil, buka dan lakukan copy/paste sesuai izin akses.</p></div>
+  </div>
+</section>
+
+<section id="media">
+  <div class="section-head"><div class="kicker">07 / MEDIA HUB</div><h2>PPT & Video Praktikum</h2><p>File media disiapkan sebagai bagian dari website tugas.</p></div>
+  <div class="media-grid">
+
+    <div class="card media">
+      <h3>📑 Materi PPT</h3>
+      <p class="media-note">Black Futuristic Animated Programmer Presentation</p>
+      <a class="btn primary" href="Black%20Futuristic%20Animated%20Programmer%20Presentation_20260928_040021_0000.pptx" download>⬇ Download PPT</a>
+      <a class="btn" href="Black%20Futuristic%20Animated%20Programmer%20Presentation_20260928_040021_0000.pptx" target="_blank">Buka PPT</a>
+      <br><br>
+      <iframe class="ppt" src="https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Faulinac4-pixel.github.io%2Fwebsite-jaringan-komputer%2FBlack%2520Futuristic%2520Animated%2520Programmer%2520Presentation_20260928_040021_0000.pptx" title="Preview PPT"></iframe>
+    </div>
+
+    <div class="card media">
+      <h3>🎬 Video Praktikum</h3>
+      <p class="media-note">Tempat video tugas. Upload file video ke repository lalu samakan nama file pada bagian source.</p>
+      <video controls preload="metadata">
+        <source src="1000731324_25MB.mp4" type="video/mp4">
+        Browser kamu belum mendukung video HTML5.
+      </video>
+      <a class="btn" href="1000731324_25MB.mp4" target="_blank">Buka Video</a>
+    </div>
+
+    <div class="card media">
+      <h3>🎬 Video Praktikum 2</h3>
+      <p class="media-note">Video kedua dapat dipasang menggunakan file MP4 yang sudah dikompres.</p>
+      <video controls preload="metadata">
+        <source src="1000731378_under15MB.mp4" type="video/mp4">
+        Browser kamu belum mendukung video HTML5.
+      </video>
+      <a class="btn" href="1000731378_under15MB.mp4" target="_blank">Buka Video 2</a>
+    </div>
+
+    <div class="card media">
+      <h3>📸 Foto Identitas</h3>
+      <p class="media-note">Upload foto mahasiswa ke repository dengan nama file:</p>
+      <div class="code">foto-identitas.jpg</div>
+      <p class="media-note">Setelah file di-upload ke folder yang sama dengan HTML, foto akan otomatis muncul pada kartu identitas.</p>
+    </div>
+  </div>
+  <br>
+  <div class="note">⚠️ Agar website berjalan sempurna di GitHub Pages, upload <b>index-baru.html</b>, file PPT, foto identitas, dan kedua file video ke repository yang sama.</div>
+</section>
+</main>
+
+<footer>
+  <b>LANLAB / 01</b><br>
+  Jaringan Komputer • Aulin Arsih Andrianie • 1-TIA • Teknik Komputer<br>
+  D4 Teknologi Informatika Multimedia Digital • Dr. Ali Firdaus, S.Kom., M.Kom.
+</footer>
+</body>
+</html>
